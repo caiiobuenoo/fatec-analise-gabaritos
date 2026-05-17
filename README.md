@@ -20,12 +20,14 @@ Este projeto de **Data Analytics** explora o histórico de gabaritos do Vestibul
 
 ![Dashboard Fatec](gabarito_fatec_definitivo.png)
 
-### 🧠 Principais Insights (A "Assimetria Controlada")
-A análise visual e estatística comprovou que a prova obedece a regras matemáticas estritas de balanceamento e desvio:
+### 🧠 Principais Insights (O Padrão de Cada Alternativa)
+A análise visual e estatística comprovou que a prova obedece a regras matemáticas estritas de balanceamento e desvio. Cada alternativa possui um papel específico na arquitetura do exame:
 
-* **A Âncora (Letra C):** É a alternativa mais estável de todo o histórico. Ela funciona como o "centro de gravidade" da prova, cravando 10 respostas na maioria absoluta das edições.
-* **A Armadilha Estatística (Letra D):** É o fator de volatilidade. Quando a banca projeta uma prova para quebrar os algoritmos de "chute" dos candidatos, ela despeja um volume desproporcional na letra D (registrando picos recordes de até 17 respostas corretas).
-* **O Pêndulo Binário (Letra E):** Funciona como variável de compensação de extremos. Ela foge da média central: ou sofre de escassez (8 a 9 respostas) ou inunda o gabarito (atingindo a marca de 14 respostas).
+* **Letra A (A Base Silenciosa):** Historicamente discreta, a letra A raramente é protagonista (picos altos) ou vilã (escassez extrema). Ela atua como um preenchimento seguro, flutuando em uma banda muito estreita e previsível, geralmente estacionando entre 9 e 11 respostas.
+* **Letra B (A Falsa Segurança):** Durante mais de uma década, comportou-se como a alternativa mais forte da prova (cravando 11 a 12 pontos). Porém, os dados revelam que recentemente a banca alterou seu algoritmo: nas edições de 2024.1 e 2024.2, a letra B sofreu um corte drástico, despencando para apenas 5 respostas corretas, provando que os examinadores ativamente punem chutes viciados.
+* **Letra C (A Âncora Estatística):** É o "centro de gravidade" da prova. Independentemente de quão caótica a distribuição se torne nas outras letras, a C é a alternativa que apresenta a maior resiliência histórica, cravando frequentemente o valor exato de 10 respostas corretas na maioria absoluta das edições.
+* **Letra D (A Armadilha de Volatilidade):** É o fator de caos desenhado pela banca. Quando o exame é projetado para quebrar os cálculos de probabilidade dos candidatos, um volume desproporcional de respostas corretas é despejado na letra D, que já registrou os maiores picos da história do exame (atingindo a marca de 17 respostas).
+* **Letra E (O Pêndulo de Compensação):** Funciona como a variável de ajuste matemático para fechar as 54 questões. Por ser usada para equilibrar o exame, ela foge da média central: apresenta um comportamento binário onde ou sofre de extrema escassez (7 a 8 respostas) ou inunda o gabarito (atingindo 14 respostas).
 
 ## 🚀 Como reproduzir este projeto
 1. Clone este repositório:
