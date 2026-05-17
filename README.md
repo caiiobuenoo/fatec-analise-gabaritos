@@ -30,5 +30,6 @@ A análise visual e estatística comprovou que a prova obedece a regras matemát
 * **Letra E (O Pêndulo de Compensação):** Funciona como a variável de ajuste matemático para fechar as 54 questões. Por ser usada para equilibrar o exame, ela foge da média central: apresenta um comportamento binário onde ou sofre de extrema escassez (7 a 8 respostas) ou inunda o gabarito (atingindo 14 respostas).
 
 ## 🚀 Como reproduzir este projeto
-1. Clone este repositório
-git clone https://github.com/caiiobuenoo/fatec-analise-gabaritos.git
+1. Clone este repositório:
+   ```bash
+   git clone https://github.com/caiiobuenoo/fatec-analise-gabaritos.git
