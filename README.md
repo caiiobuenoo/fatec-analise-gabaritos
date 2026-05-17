@@ -1,54 +1,85 @@
-# 📊 Engenharia Reversa de Gabaritos: Análise Estatística e Preditiva do Vestibular FATEC
+# 📊 FATEC Exam Analytics: Reverse Engineering & Predictive Modeling
 
 ![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
 ![Pandas](https://img.shields.io/badge/Pandas-Data%20Manipulation-150458.svg)
-![Matplotlib](https://img.shields.io/badge/Matplotlib-Data%20Visualization-brightgreen.svg)
-![Seaborn](https://img.shields.io/badge/Seaborn-Statistical%20Plotting-4C72B0.svg)
-![Data Analysis](https://img.shields.io/badge/Data%20Analysis-Predictive%20Modeling-success.svg)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-Low%20Level%20Rendering-brightgreen.svg)
+![Seaborn](https://img.shields.io/badge/Seaborn-Statistical%20API-4C72B0.svg)
+![Status](https://img.shields.io/badge/Status-Deployed-success.svg)
+![Data Science](https://img.shields.io/badge/Domain-Data%20Science%20%26%20Analytics-black.svg)
 
-## 📌 Executive Summary
-A distribuição de respostas em exames de larga escala não ocorre de forma puramente aleatória. Bancas examinadoras utilizam algoritmos de balanceamento para mitigar fraudes e penalizar técnicas de resolução baseadas em probabilidade cega (o popular "chute"). 
+## 📌 1. Executive Summary & Business Problem
+Testes padronizados de múltipla escolha não são avaliações puramente de conhecimento; eles são sistemas probabilísticos complexos. Para garantir a integridade do exame e mitigar a taxa de sucesso de técnicas baseadas em probabilidade cega (o "chute" estatístico), bancas examinadoras desenvolvem algoritmos proprietários de distribuição de alternativas.
 
-Este projeto de **Data Analytics & Predictive Modeling** executa uma engenharia reversa no histórico de gabaritos do Vestibular da FATEC (2007 a 2026). Através de extração, limpeza (ETL) e análise estatística de múltiplas safras de provas, o objetivo foi decodificar a "Assimetria Controlada" da banca, segmentando o comportamento por volume de questões e projetando cenários preditivos para edições futuras.
+Este projeto aplica técnicas de **Data Analytics, Engenharia Reversa e Estatística Descritiva** sobre duas décadas de histórico (2007 - 2026) do Vestibular da FATEC (Faculdade de Tecnologia de São Paulo). O objetivo primário é auditar a matriz de respostas da banca, identificar os vieses de "Assimetria Controlada" inseridos intencionalmente no sistema e desenvolver uma heurística preditiva para otimização de tomada de decisão em cenários de tempo esgotado.
 
-## 🛠️ Arquitetura de Dados e Pipeline (ETL)
-Os dados brutos foram extraídos de documentos PDF oficiais, normalizados em formato estruturado (DataFrames) e divididos em três *cohorts* (grupos de controle) com base nas mudanças históricas do formato do exame:
+---
 
-1. **Cohort Legacy (48 Questões):** Edições de 2007 a 2009.
-2. **Cohort Standard (54 Questões):** Edições de 2010 a 2025. (O *Core* do Dataset).
-3. **Cohort Expansion (60 Questões):** Edições a partir de 2026.
+## 🏗️ 2. Arquitetura de Dados e Pipeline ETL
+Para garantir a confiabilidade matemática da análise, os dados brutos passaram por um pipeline rigoroso de *Extract, Transform, Load* (ETL):
 
-## 📈 Dashboard Analítico: O Padrão Ouro (54 Questões)
+* **Data Extraction:** Coleta manual/automatizada de espelhos de gabaritos oficiais em formato PDF das edições históricas.
+* **Data Wrangling & Transformation:** Normalização de dados não-estruturados em um esquema relacional (DataFrames estruturados no formato Tidy Data).
+* **Data Validation (Integrity Checks):** Criação de testes de sanidade garantindo que $\sum (A, B, C, D, E) = Total\_Questions$ para cada registro, eliminando ruídos ou falhas de transcrição.
 
-![Dashboard Fatec](gabarito_fatec_definitivo.png)
+### 2.1. Cohort Segmentation (Agrupamento Temporal)
+O comportamento da banca não é estático; ele evolui. Para evitar contaminação estatística, o *dataset* foi isolado em três *cohorts* de formato de prova:
+1. **Cohort Legacy (48 Questões | 2007-2009):** A fase embrionária do exame.
+2. **Cohort Standard (54 Questões | 2010-2025):** A "Moda Estatística" e o *core* das nossas análises de variância.
+3. **Cohort Expansion (60 Questões | 2026-Atual):** A nova matriz curricular e comportamental da banca.
 
-## 🔬 Deep Dive Estatístico: Comportamento por Alternativa
-Focando no Cohort Standard (A Moda Estatística de 54 questões), a EDA (*Exploratory Data Analysis*) revelou que cada alternativa possui uma "personalidade" ou peso algorítmico específico na arquitetura da prova:
+---
 
-* **Letra A (Baseline Constante):** Atua como o "ruído branco" da prova. Apresenta a menor variância histórica, estacionando consistentemente na faixa de 9 a 11 respostas. Raramente apresenta picos (*outliers* positivos) ou vales (*outliers* negativos).
-* **Letra B (Falsa Segurança e Punição Ativa):** Durante mais de uma década, foi a alternativa mais populosa (11 a 12 pontos). Contudo, os dados provam uma intervenção algorítmica recente da banca: nos ciclos 2024.1 e 2024.2, a B sofreu um *crash* severo, caindo para apenas 5 respostas. Isso indica uma política punitiva ativa contra candidatos com vícios de preenchimento.
-* **Letra C (A Âncora Estatística):** É o centro de gravidade do modelo. Independente da volatilidade do exame, a Letra C demonstra a maior resiliência do *dataset*, cravando exatas 10 ocorrências na maioria absoluta das edições.
-* **Letra D (O Gatilho de Volatilidade):** É a variável de caos inserida para quebrar o balanceamento matemático. Quando a banca adota uma postura agressiva, ela despeja um volume massivo de respostas na letra D, registrando os maiores picos de todo o histórico (15 a 17 ocorrências).
-* **Letra E (O Pêndulo de Compensação):** Funciona como variável de ajuste. Apresenta comportamento estritamente binário: para fechar a conta das 54 questões após os picos da Letra D, a Letra E entra em extrema escassez (7-8) ou inunda o gabarito (14 respostas) caso as outras opções estejam abaixo da média.
+## 📈 3. Dashboard Analítico e Data Visualization
 
-## 🔄 Análise de Cohorts: A Evolução da Banca
-A análise longitudinal cruzada entre os diferentes tamanhos de prova revela a maturação dos algoritmos da banca ao longo das décadas:
+![Dashboard Executivo FATEC](gabarito_fatec_definitivo.png)
 
-* **Fase 1: O Modelo Uniforme (48 Questões | 2007 - 2009)**
-  A banca aplicava uma distribuição quase perfeitamente simétrica. Analisando as edições 2007.2 e 2008.1, nota-se uma alocação plana (ex: A=10, B=10, C=10, D=9, E=9). O risco de previsibilidade aqui era altíssimo.
-* **Fase 2: A Assimetria Controlada (54 Questões | 2010 - 2025)**
-  Para combater a previsibilidade da Fase 1, a banca aumentou o volume da prova e introduziu os conceitos de "Volatilidade" (Letra D) e "Punição" (Letra B). O gabarito deixou de ser *flat* (plano) e passou a ter vales e picos intencionais.
-* **Fase 3: A Nova Matriz (60 Questões | 2026.1 - Atual)**
-  Com o aumento para 60 questões (Edição 2026.1: A=13, B=11, C=11, D=11, E=14), nota-se que as letras centrais (B, C, D) se estabilizaram fortemente em 11 ocorrências cada, enquanto os extremos (A e E) absorveram a carga extra de questões. 
+A visualização acima utiliza *barplots* estilizados via Seaborn para contrapor o **Modelo de Gabarito Ideal (Média Histórica)** contra o **Raio-X de Frequência Estrita**, permitindo a detecção imediata de *outliers* (pontos fora da curva) na série temporal.
 
-## 🔮 Forecasting: Cenários Preditivos
-Com base na regressão histórica, um modelo de otimização de decisão para o candidato (frente ao risco de tempo esgotado) deve considerar três cenários de montagem do gabarito futuro:
+---
 
-1. **Cenário Conservador (Regressão à Média):** A banca busca o equilíbrio clássico. Probabilidade de 20% cravada por alternativa. Estratégia de preenchimento cego deve focar nas "Âncoras" (C e D) devido à estabilidade de longo prazo.
-2. **Cenário Punitivo (Alta Variância):** A banca ataca ativamente o comportamento previsível (padrão visto em 2024). Neste cenário hipotético, uma letra sofrerá escassez severa (ex: B caindo para 5), enquanto uma letra secundária receberá um pico (ex: D indo a 17). 
-3. **Cenário de Extremos (Padrão 60 Questões):** Assumindo a solidificação do novo modelo de 60 questões, as alternativas de ponta (A e E) assumem o protagonismo probabilístico, concentrando até 45% do gabarito juntas, tornando-se o vetor mais seguro de mitigação de risco em caso de chute residual.
+## 🔬 4. Deep Dive Analítico: A Psicologia do Algoritmo (Cohort 54Q)
+A análise exploratória (EDA) da era de 54 questões permitiu classificar o comportamento de cada alternativa sob a ótica de desvio padrão e risco:
 
-## 🚀 Como reproduzir este projeto (Deploy Local)
-1. Clone este repositório:
-   ```bash
-   git clone [https://github.com/caiiobuenoo/fatec-analise-gabaritos.git](https://github.com/caiiobuenoo/fatec-analise-gabaritos.git)
+* 🟢 **Letra C (A "Âncora Estatística"):** Atua como o centro de gravidade do modelo e prova de sanidade do exame. Independentemente da volatilidade das outras letras, a Letra C possui o menor Desvio Padrão do conjunto, ancorando-se de forma resiliente na marca de **10 respostas corretas** em mais de 60% da série histórica.
+* 🔵 **Letra A (A "Baseline Silenciosa"):** Historicamente discreta, a letra A raramente assume protagonismo. Funciona como um preenchimento seguro e de baixa variância, oscilando em uma banda estreita entre 9 e 11 respostas.
+* 🟠 **Letra B (O "Honeypot" Punitivo):** Durante 13 anos, operou como a alternativa de maior volume (11 a 12 pontos). Contudo, a análise de série temporal detectou um *Crash Point* algorítmico nas safras 2024.1 e 2024.2, onde a banca cortou sua presença para **apenas 5 respostas**. Conclusão: a banca rastreia vícios de preenchimento dos candidatos e programa quebras abruptas para punir "chutes" padronizados em opções aparentemente seguras.
+* 🔴 **Letra D (O "Gatilho de Caos"):** É o vetor de volatilidade intencional inserido para destruir cálculos de probabilidade lineares. Quando a banca projeta um exame para maximizar a dificuldade probabilística, ela despeja um volume massivo de gabaritos na letra D, registrando picos anômalos que vão de **15 a 17 ocorrências** em um único exame.
+* 🟣 **Letra E (O "Pêndulo de Compensação"):** Funciona como a variável dependente do sistema. Como a soma total deve ser obrigatoriamente 54, a Letra E absorve o "troco" das outras alternativas. Isso gera uma distribuição bimodal (binária): ou ela sofre de escassez absoluta (7 a 8 respostas) ou inunda o cartão (atingindo até 14 respostas).
+
+---
+
+## 🔄 5. Evolução Histórica e o Novo Paradigma (60 Questões)
+Observando a transição longitudinal:
+* **A Era da Simetria (48Q):** Nos primeiros exames, a distribuição beirava a perfeição (10-10-10-9-9). O algoritmo era altamente previsível e vulnerável à engenharia reversa.
+* **A Era da Assimetria (54Q):** Introdução das variâncias agressivas (Letras B e D) para quebrar o padrão.
+* **A Nova Matriz (60Q - 2026):** O primeiro dado do modelo de 60 questões (A=13, B=11, C=11, D=11, E=14) indica que o algoritmo decidiu congelar o "miolo" da prova. As letras centrais (B, C, D) estão planificadas em 11 ocorrências, enquanto os polos extremos (A e E) passaram a absorver a carga de volatilidade.
+
+---
+
+## 🔮 6. Forecasting: Cenários Preditivos para Otimização de Risco
+Transformando dados em inteligência de decisão. Frente ao cenário restrito do vestibular, um candidato deve basear seu *risk management* (gerenciamento de risco) em três cenários de alocação residual:
+
+1. **Cenário Standard (Regressão à Média):** O candidato que precisa preencher lacunas de forma segura deve aportar seu capital de risco na Letra C, devido ao seu comportamento histórico de "Âncora" e baixa volatilidade.
+2. **Cenário de Alta Variância (Hedge Contra Punição):** Sabendo que a banca utiliza a letra B como armadilha punitiva recente e a letra D como pico surpresa, distribuições puramente aleatórias nessas alternativas apresentam Risco/Retorno desfavorável.
+3. **Cenário Nova Matriz (60 Questões):** Caso a tendência de 2026 se confirme, as letras A e E formam a nova fronteira de segurança, concentrando quase 45% do gabarito total, tornando-se os alvos prediletos para maximização de acertos estatísticos de última hora.
+
+---
+
+## 💻 7. Reproducibilidade & Estrutura do Projeto
+
+### Pré-requisitos (Ambiente de Desenvolvimento)
+* Python 3.8+
+* Gestão de dependências via `pip` ou ambiente virtual (`.venv` / `conda`).
+
+```bash
+# Clone the repository
+git clone [https://github.com/caiiobuenoo/fatec-analise-gabaritos.git](https://github.com/caiiobuenoo/fatec-analise-gabaritos.git)
+
+# Navigate to the directory
+cd fatec-analise-gabaritos
+
+# Install required Data Science libraries
+pip install pandas numpy matplotlib seaborn
+
+# Execute the ETL & Visualization pipeline
+python analise_fatec.py
