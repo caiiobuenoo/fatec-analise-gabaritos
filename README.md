@@ -33,5 +33,3 @@ A análise visual e estatística comprovou que a prova obedece a regras matemát
 1. Clone este repositório:
    ```bash
    git clone [https://github.com/caiiobuenoo/fatec-analise-gabaritos.git](https://github.com/caiiobuenoo/fatec-analise-gabaritos.git)
-   ```
-   
